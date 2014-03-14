@@ -1,68 +1,49 @@
-wordpress Cookbook
-==================
-TODO: Enter the cookbook description here.
+WordPress latest Cookbook
+================
 
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+ - Author: Eduardo Ximenes Soares <duximenes@gmail.com>
+ - Cookbook install and configure: WordPress latest
+ - Test: chef-solo AMI UBNTU SERVER EC2 | UBUNTU SERVER 
+ - Directory database: /database 
+	- Optimize RAID EBS
 
-Requirements
-------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
-#### packages
-- `toaster` - wordpress needs toaster to brown your bagel.
+HowTo
+------------------
 
-Attributes
-----------
-TODO: List your cookbook attributes here.
+ - Install GIT client
 
-e.g.
-#### wordpress::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['wordpress']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+ - Install chef solo
+	- curl -L https://www.opscode.com/chef/install.sh | bash
 
-Usage
------
-#### wordpress::default
-TODO: Write usage instructions for each cookbook.
+ - Download and configure CHEF-REPO structure
+	- wget http://github.com/opscode/chef-repo/tarball/master
+	- tar -zxvf master  
+	- mv opscode-chef-repo-f9d4b0c/ /opt/chef-repo
+	- mkdir /opt/chef-repo/.chef
+ 
+ - Configure cookbook path (/opt/chef-repo/.chef/knife.rb)
+	- Add line
+		- cookbook_path [ '/opt/chef-repo/cookbooks' ]
+ 
+ - Configure solo.rb (/opt/chef-repo/solo.rb)
+	- Add lines:
+		- file_cache_path "/opt/chef-solo"
+		- cookbook_path "/opt/chef-repo/cookbooks"
 
-e.g.
-Just include `wordpress` in your node's `run_list`:
+ - Download REPO: 
+	- git clone https://github.com/ximenes/chef_wordpress.git  -l /opt/chef-repo/cookbooks/wordpress
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[wordpress]"
-  ]
-}
-```
+ - Create your json (/opt/chef-repo/JSON_NAME.json)
+	- Add line: 
+		-  {   "run_list": [ "recipe[wordpress]" ] } 
 
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
+ - Execute CHEF-SOLO
+	- chef-solo -c /opt/chef-repo/solo.rb -j /opt/chef-repo/JASON_NAME.json
 
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
 
-License and Authors
--------------------
-Authors: TODO: List authors
+ - Access URL:
+	- http://YOUR_IP/wordpress
+	- http://192.168.1.1/wordpress
+
+
