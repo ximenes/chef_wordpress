@@ -4,8 +4,6 @@ WordPress latest Cookbook
  - Author: Eduardo Ximenes Soares <duximenes@gmail.com>
  - Cookbook install and configure: WordPress latest
  - Test: chef-solo AMI UBNTU SERVER EC2 | UBUNTU SERVER 
- - Directory database: /database 
-	- Optimize RAID EBS
 
 
 HowTo
